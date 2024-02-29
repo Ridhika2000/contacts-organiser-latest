@@ -1,0 +1,18 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: smart-contacts-app-alpha
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: smart-contacts-app
+  template:
+    metadata:
+      labels:
+        app: smart-contacts-app
+    spec:
+      containers:
+      - name: smart-contacts-app
+        image: ridhika2000/smart-contacts-manager:24
+        

@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: smart-contacts-app-beta
+  namespace: beta
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: smart-contacts-app
+      environment: beta
+  template:
+    metadata:
+      labels:
+        app: smart-contacts-app
+        environment: beta
+    spec:
+      containers:
+      - name: smart-contacts-app
+        image: ridhika2000/smart-contacts-manager:latest
+        env:
+        - name: Application_Password
+          valueFrom:
+            secretKeyRef:
+              name: smart-contacts-app-secrets
+              key: Application_Password
+        - name: Application_Environment
+          valueFrom:
+            configMapKeyRef:
+              name: smart-contacts-app-config
+              key: Application_Environment
+        - name: Application_Name
+          valueFrom:
+            configMapKeyRef:
+              name: smart-contacts-app-config
+              key: Application_Name
+        - name: Application_ConnectionString
+          valueFrom:
+            secretKeyRef:
+              name: smart-contacts-app-secrets
+              key: Application_ConnectionString
